@@ -1,39 +1,40 @@
 import random as rand
 
-def generate_five_star_occ():
-    return rand.randrange(0,100) + 1
+class GachaSimulator():
+    def __init__(self):
+        self.counter = 0
+        self.five_star = self.generate_five_star_occ()
+        self.four_star = self.generate_four_star_occ()
 
-def generate_four_star_occ():
-    return rand.randrange(0,10) + 1
+    def generate_five_star_occ(self):
+        return rand.randrange(0,100) + 1
 
-def ten_pull():
-    [one_pull() for _ in range(10)]
+    def generate_four_star_occ(self):
+        return rand.randrange(0,10) + 1
 
-def one_pull():
-    global counter, five_star, four_star
-    counter += 1
-    if counter == four_star:
-        print('4-star item')
-        four_star = counter + generate_four_star_occ()
-    elif counter == five_star:
-        print('5-star item')
-        five_star = counter + generate_five_star_occ()
-    else:
-        print('3-star item')
+    def ten_pull(self):
+        for _ in range(10):
+            self.one_pull()
 
-five_star = generate_five_star_occ()
-four_star = generate_four_star_occ()
+    def one_pull(self):
+        self.counter += 1
+        if self.counter == self.four_star:
+            print('4-star item')
+            self.four_star = self.counter + self.generate_four_star_occ()
+        elif self.counter == self.five_star:
+            print('5-star item')
+            self.five_star = self.counter + self.generate_five_star_occ()
+        else:
+            print('3-star item')
 
 if __name__ == '__main__':
-    counter = 0
-    five_star = generate_five_star_occ()
-    four_star = generate_four_star_occ()
-    print(five_star)
-    print(four_star)
+    game = GachaSimulator()
     inp = input("enter command: ")
     while(inp != 'q'):
         if inp == '1':
-            one_pull()
-        if inp == '10':
-            ten_pull()
+            game.one_pull()
+        elif inp == '10':
+            game.ten_pull()
+        else:
+            print("Please input valid command.\n")
         inp = input("enter command: ")
